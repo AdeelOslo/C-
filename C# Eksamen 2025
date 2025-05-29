@@ -1,0 +1,1343 @@
+using Eksamen_2025.Oppgaver.Oppgave1;
+using Eksamen_2025.Oppgaver.Oppgave2;
+using Eksamen_2025.Oppgaver.Oppgave3;
+using Eksamen_2025.Oppgaver.Oppgave4;
+using Eksamen_2025.Oppgaver.Oppgave5;
+
+class Program
+{
+    static void Main()
+    {
+        // Kaller oppgavene i Oppgave 1
+        Oppgave1A.Run();
+        Oppgave1B.Run();
+        Oppgave1C.Run();
+        Oppgave1D.Run();
+        Oppgave1E.Run();
+
+        // Kaller oppgavene i Oppgave 2
+        Oppgave2A.Run();
+        Oppgave2B.Run();
+        Oppgave2C.Run();
+        Oppgave2D.Run();
+        Oppgave2E.Run();
+
+        // Kaller oppgavene i Oppgave 3
+        Oppgave3A.Run();
+        Oppgave3B.Run();
+        Oppgave3C.Run();
+        Oppgave3D.Run();
+        Oppgave3E.Run();
+        
+        // Kaller oppgavene i Oppgave 4
+        Oppgave4A.Run();
+        Oppgave4B.Run();
+        Oppgave4C.Run();
+        Oppgave4D.Run();
+        Oppgave4E.Run();
+        
+        // Kaller oppgavene i Oppgave 5
+        Oppgave5A.Run();
+        Oppgave5B.Run();
+        Oppgave5C.Run();
+        Oppgave5D.Run();
+    }
+}
+
+namespace Eksamen_2025.Interfaces
+{
+    public interface IGame
+    {
+        void Start();     // Starter spillet
+        void PlayRound(); // Utfører én spillrunde
+        void EndGame();   // Avslutter spillet og viser resultatet
+    }
+}
+
+namespace Eksamen_2025.Interfaces
+{
+    public interface IPrinter
+    {
+        void Print();  // Grensesnittmetode som alle klasser som implementerer IPrinter må definere
+    }
+}
+
+namespace Eksamen_2025.Interfaces
+{
+    public interface IStorable
+    {
+        string ToCSV();  // Returnerer en kommaseparert tekstlinje
+        string ToJSON(); // Returnerer en JSON-struktur
+        string ToXML();  // Returnerer en XML-struktur
+    }
+}
+
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public class Airplane : TransportVehicle
+    {
+        public double WingSpan { get; private set; } // Vingespenn i meter
+
+        public Airplane(string model, double fuelLevel, double wingSpan)
+            : base(model, 150, fuelLevel) // Kapasitet er satt til 150 passasjerer
+        {
+            WingSpan = wingSpan;
+        }
+
+        public override void Run()
+        {
+            if (FuelLevel > 20)
+            {
+                Console.WriteLine("The airplane flies in the sky.");
+                ConsumeFuel(20); // Reduserer drivstoffnivået med 20%
+            }
+            else
+            {
+                Console.WriteLine("Drivstoffnivået er for lavt til å fly!");
+            }
+        }
+
+        public void TakeOff()
+        {
+            Console.WriteLine("The airplane is taking off.");
+        }
+    }
+}
+
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public class ArraySum
+    {
+        public void CalculateSum()
+        {
+            int[] numbers = { 10, 20, 30, 40, 50 };
+            int sum = 0;
+
+            foreach (int number in numbers)
+            {
+                sum += number;
+            }
+
+            Console.WriteLine($"Summen av tallene i arrayen er: {sum}");
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Interfaces;
+
+namespace Eksamen_2025.Klasser
+{
+    public class Athlete : IPrinter
+    {
+        public string Name { get; set; }
+        public string Sport { get; set; }
+        public int Age { get; set; }
+        public int MedalCount { get; private set; }  // MedalCount er en private setter, så den kan bare oppdateres gjennom metoder
+        public string PersonalNumber { get; set; }
+
+        public Athlete(string name, string sport, int age, int medalCount, string personalNumber)
+        {
+            Name = name;
+            Sport = sport;
+            Age = age;
+            MedalCount = medalCount;
+            PersonalNumber = personalNumber;
+        }
+
+        public void Print()
+        {
+            Console.WriteLine($"Navn: {Name}, Sport: {Sport}, Alder: {Age}, Medaljer: {MedalCount}, Personnummer: {PersonalNumber}");
+        }
+
+        public void AddMedalCount(int count)
+        {
+            MedalCount += count;  // Øker medaljeantallet med den angitte verdien
+        }
+
+        public bool IsOfLegalAge()
+        {
+            return Age >= 18;  // Sjekker om atleten er myndig
+        }
+    }
+}
+
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public class AverageCalculator
+    {
+        public double CalculateAverage(double[] numbers)
+        {
+            double sum = 0;
+
+            foreach (double number in numbers)
+            {
+                sum += number;
+            }
+
+            return sum / numbers.Length;
+        }
+
+        public void Run()
+        {
+            double[] numbers = { 10.5, 20.3, 30.7, 40.2, 50.8 };
+
+            double average = CalculateAverage(numbers);
+
+            Console.WriteLine($"Gjennomsnittet av tallene i arrayen er: {average:F2}");
+        }
+    }
+}
+
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public class Boat : TransportVehicle
+    {
+        public double DeckArea { get; private set; } // Størrelse på dekk i kvadratmeter
+
+        public Boat(string model, double fuelLevel, double deckArea)
+            : base(model, 10, fuelLevel) // Kapasitet er satt til 10 passasjerer
+        {
+            DeckArea = deckArea;
+        }
+
+        public override void Run()
+        {
+            if (FuelLevel > 10)
+            {
+                Console.WriteLine("The boat sails on the water.");
+                ConsumeFuel(10); // Reduserer drivstoffnivået med 10%
+            }
+            else
+            {
+                Console.WriteLine("Drivstoffnivået er for lavt til å seile!");
+            }
+        }
+
+        public void Anchor()
+        {
+            Console.WriteLine("The boat is anchored.");
+        }
+    }
+}
+
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public class Car : TransportVehicle
+    {
+        public int TrunkCapacity { get; private set; } // Volum av bagasjerommet
+
+        public Car(string model, double fuelLevel, int trunkCapacity)
+            : base(model, 5, fuelLevel) // Kapasitet er satt til 5 passasjerer
+        {
+            TrunkCapacity = trunkCapacity;
+        }
+
+        public override void Run()
+        {
+            if (FuelLevel == 0)
+                throw new InvalidOperationException("Drivstoffnivået er 0. Kjøretøyet kan ikke kjøre.");
+
+            if (FuelLevel > 10)
+            {
+                Console.WriteLine("The car drives on the road.");
+                ConsumeFuel(10); // Reduserer drivstoffnivået med 10%
+            }
+            else
+            {
+                Console.WriteLine("Drivstoffnivået er for lavt til å kjøre!");
+            }
+        }
+
+        public void LoadCargo(int volume)
+        {
+            if (volume <= TrunkCapacity)
+            {
+                Console.WriteLine($"Last på {volume} liter er lagt i bagasjerommet.");
+            }
+            else
+            {
+                Console.WriteLine($"Bagasjerommet har ikke nok plass! Maks kapasitet: {TrunkCapacity} liter.");
+            }
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using Eksamen_2025.Interfaces;
+
+namespace Eksamen_2025.Klasser
+{
+    public class Coach : IPrinter
+    {
+        public string Name { get; set; }
+        public string Sport { get; set; }
+        public int Experience { get; set; }
+        public string TeamName { get; set; }
+        private List<Athlete> Athletes { get; set; }
+
+        public Coach(string name, string sport, int experience, string teamName)
+        {
+            Name = name;
+            Sport = sport;
+            Experience = experience;
+            TeamName = teamName;
+            Athletes = new List<Athlete>();
+        }
+
+        public void AssignAthleteToCoach(Athlete athlete)
+        {
+            Athletes.Add(athlete);
+        }
+
+        public void ListAllAthletes()
+        {
+            Console.WriteLine($"Trener: {Name}, Team: {TeamName}");
+            foreach (var athlete in Athletes)
+            {
+                athlete.Print();
+            }
+        }
+
+        public void Print()
+        {
+            Console.WriteLine($"Trener: {Name}, Sport: {Sport}, Erfaring: {Experience} år, Team: {TeamName}");
+        }
+    }
+}
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public class DataTyper
+    {
+        public void PrintVariables()
+        {
+            int number = 42;
+            double pi = 3.14159;
+            string text = "Hello, World!";
+            bool isTrue = true;
+
+            Console.WriteLine($"Int: {number}, Datatype: {number.GetType()}");
+            Console.WriteLine($"Double: {pi}, Datatype: {pi.GetType()}");
+            Console.WriteLine($"String: \"{text}\", Datatype: {text.GetType()}");
+            Console.WriteLine($"Bool: {isTrue}, Datatype: {isTrue.GetType()}");
+        }
+    }
+}
+using Eksamen_2025.Interfaces;
+
+namespace Eksamen_2025.Klasser
+{
+    public abstract class Game : IGame
+    {
+        // Egenskaper for spillet
+        public string GameName { get; protected set; }
+        public int MaxRounds { get; protected set; }
+        public int CurrentRound { get; protected set; }
+        public bool IsGameOver { get; protected set; }
+
+        // Konstruktør for å initialisere spillet
+        protected Game(string gameName, int maxRounds)
+        {
+            GameName = gameName;
+            MaxRounds = maxRounds;
+            CurrentRound = 0;
+            IsGameOver = false;
+        }
+
+        // Abstrakte metoder som må implementeres i subklasser
+        public abstract void Start();
+        public abstract void PlayRound();
+        public abstract void EndGame();
+
+        // Felles metode for å vise spillstatus
+        public void ShowStatus()
+        {
+            System.Console.WriteLine($"Spill: {GameName}");
+            System.Console.WriteLine($"Runde: {CurrentRound}/{MaxRounds}");
+            System.Console.WriteLine($"Spillet er over: {IsGameOver}");
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace Eksamen_2025.Klasser
+{
+    public class GuessingGame : Game
+    {
+        // Ekstra egenskaper for GuessingGame
+        public int SecretNumber { get; private set; }
+        public int GuessCount { get; private set; }
+        public int Score { get; private set; }
+
+        // Konstruktør for å initialisere spillet
+        public GuessingGame(string gameName, int maxRounds, int range)
+            : base(gameName, maxRounds)
+        {
+            SecretNumber = new Random().Next(1, range + 1); // Hemmelig tall innenfor valgt rekkevidde
+            GuessCount = 0;
+            Score = 0;
+        }
+
+        // Starter spillet
+        public override void Start()
+        {
+            Console.WriteLine($"Velkommen til {GameName}!");
+            Console.WriteLine($"Du har maks {MaxRounds} runder på å gjette det hemmelige tallet.");
+            IsGameOver = false;
+        }
+
+        // Utfører én spillrunde
+        public override void PlayRound()
+        {
+            if (IsGameOver)
+            {
+                Console.WriteLine("Spillet er allerede over.");
+                return;
+            }
+
+            CurrentRound++;
+            Console.WriteLine($"Runde {CurrentRound}: Gjett et tall:");
+
+            try
+            {
+                int guess = int.Parse(Console.ReadLine());
+                GuessCount++;
+
+                if (guess == SecretNumber)
+                {
+                    Console.WriteLine("Gratulerer! Du gjettet riktig.");
+                    Score = MaxRounds - GuessCount + 1; // Beregner poeng basert på hvor raskt spilleren gjetter riktig
+                    IsGameOver = true;
+                }
+                else if (guess < SecretNumber)
+                {
+                    Console.WriteLine("For lavt!");
+                }
+                else
+                {
+                    Console.WriteLine("For høyt!");
+                }
+
+                if (CurrentRound >= MaxRounds && !IsGameOver)
+                {
+                    Console.WriteLine("Du har brukt opp alle rundene!");
+                    IsGameOver = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ugyldig input: {ex.Message}");
+            }
+        }
+
+        // Avslutter spillet og viser sluttresultatet
+        public override void EndGame()
+        {
+            if (Score > 0)
+            {
+                Console.WriteLine($"Du vant spillet med en score på {Score} poeng etter {GuessCount} forsøk!");
+            }
+            else
+            {
+                Console.WriteLine("Du tapte spillet. Det hemmelige tallet var " + SecretNumber);
+            }
+
+            // Lagre resultatet i en fil
+            SaveScore();
+        }
+
+        // Lagre spillerens poeng til en fil i CSV-format
+        private void SaveScore()
+        {
+            string fileName = "HighScores.csv";
+            
+            try
+            {
+                Console.Write("Skriv inn ditt navn: ");
+                string playerName = Console.ReadLine();
+
+                using (StreamWriter writer = new StreamWriter(fileName, true))
+                {
+                    writer.WriteLine($"{playerName},{Score},{GuessCount}");
+                }
+
+                Console.WriteLine($"Resultatene ble lagret i filen: {fileName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"En feil oppstod under lagring av resultatene: {ex.Message}");
+            }
+        }
+
+        // Leser poengene fra filen og viser de beste resultatene
+        public static void LoadHighScores()
+        {
+            string fileName = "HighScores.csv";
+
+            try
+            {
+                using (StreamReader reader = new StreamReader(fileName))
+                {
+                    Console.WriteLine("\nBeste resultater:");
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] parts = line.Split(',');
+                        if (parts.Length == 3)
+                        {
+                            string playerName = parts[0];
+                            int score = int.Parse(parts[1]);
+                            int attempts = int.Parse(parts[2]);
+                            Console.WriteLine($"Navn: {playerName}, Score: {score}, Forsøk: {attempts}");
+                        }
+                    }
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("Ingen tidligere resultater funnet.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"En feil oppstod under lesing av resultater: {ex.Message}");
+            }
+        }
+    }
+}
+
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public class NameFormatter
+    {
+        public string FormatName(string firstName, string lastName)
+        {
+            return $"{lastName}, {firstName}";
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("Skriv inn fornavn:");
+            string firstName = Console.ReadLine();
+// Selv om man kan lage en static string og kalle på den men jeg velger å spørre brukeren om fornavn og etternavn.
+            
+            Console.WriteLine("Skriv inn etternavn:");
+            string lastName = Console.ReadLine();
+
+            string formattedName = FormatName(firstName, lastName);
+            Console.WriteLine($"Formatert navn: {formattedName}");
+        }
+    }
+}
+
+using System;
+using System.Text;
+using Eksamen_2025.Interfaces;
+
+namespace Eksamen_2025.Klasser
+{
+    public class Product : IStorable
+    {
+        // Egenskaper for produktet
+        public string ProductID { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public double Price { get; set; }
+        public int Quantity { get; set; }
+
+        // Konstruktør for å initialisere produktet
+        public Product(string productID, string name, string category, double price, int quantity)
+        {
+            ProductID = productID;
+            Name = name;
+            Category = category;
+            Price = price;
+            Quantity = quantity;
+        }
+
+        // Implementasjon av ToCSV-metoden (kommaseparert tekstlinje)
+        public string ToCSV()
+        {
+            return $"{ProductID},{Name},{Category},{Price},{Quantity}";
+        }
+
+        // Implementasjon av ToJSON-metoden (JSON-struktur)
+        public string ToJSON()
+        {
+            return $"{{\"ProductID\":\"{ProductID}\",\"Name\":\"{Name}\",\"Category\":\"{Category}\",\"Price\":{Price},\"Quantity\":{Quantity}}}";
+        }
+
+        // Implementasjon av ToXML-metoden (XML-struktur)
+        public string ToXML()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("<Product>");
+            sb.AppendLine($"  <ProductID>{ProductID}</ProductID>");
+            sb.AppendLine($"  <Name>{Name}</Name>");
+            sb.AppendLine($"  <Category>{Category}</Category>");
+            sb.AppendLine($"  <Price>{Price}</Price>");
+            sb.AppendLine($"  <Quantity>{Quantity}</Quantity>");
+            sb.AppendLine("</Product>");
+            return sb.ToString();
+        }
+    }
+}
+using System;
+
+namespace Eksamen_2025.Klasser
+{
+    public abstract class TransportVehicle
+    {
+        // Properties
+        public string Model { get; set; }
+        public int Capacity { get; set; }
+        public double FuelLevel { get; private set; } // Setter er privat for å beskytte egenskapen
+
+        // Constructor
+        public TransportVehicle(string model, int capacity, double fuelLevel)
+        {
+            Model = model;
+            Capacity = capacity;
+            FuelLevel = Math.Min(fuelLevel, 100); // Sikrer at drivstoffnivået ikke overstiger 100%
+        }
+
+        // Abstract method to be implemented by derived classes
+        public abstract void Run();
+
+        // Method to refuel the vehicle
+        public void Refuel(double amount)
+        {
+            FuelLevel = Math.Min(FuelLevel + amount, 100); // Oppdaterer drivstoffnivået med maks 100%
+            Console.WriteLine($"Drivstoff fylt. Nåværende nivå: {FuelLevel}%");
+        }
+
+        // Method to reduce fuel level (for internal use)
+        protected void ConsumeFuel(double amount)
+        {
+            FuelLevel = Math.Max(FuelLevel - amount, 0); // Sikrer at drivstoffnivået ikke går under 0%
+        }
+
+        public void PrintDetails()
+        {
+            Console.WriteLine($"Modell: {Model}, Kapasitet: {Capacity}, Drivstoffnivå: {FuelLevel}%");
+        }
+    }
+}
+
+using System;
+using System.Linq;
+
+namespace Eksamen_2025.Klasser
+{
+    public class VowelCounter
+    {
+        public void CountVowels()
+        {
+            Console.WriteLine("Skriv inn en norsk setning:");
+            string input = Console.ReadLine();
+
+            int vowelCount = 0;
+            string vowels = "aeiouyæøå";
+
+            foreach (char c in input.ToLower())
+            {
+                if (vowels.Contains(c))
+                {
+                    vowelCount++;
+                }
+            }
+
+            Console.WriteLine($"Antall vokaler i setningen: {vowelCount}");
+        }
+    }
+}
+
+
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave1
+{
+    public class Oppgave1A
+    {
+        public static void Run()
+        {
+            DataTyper dataTyper = new DataTyper();
+            dataTyper.PrintVariables();
+        }
+    }
+}
+
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave1
+{
+    public class Oppgave1B
+    {
+        public static void Run()
+        {
+            VowelCounter counter = new VowelCounter();
+            counter.CountVowels();
+        }
+    }
+}
+
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave1
+{
+    public class Oppgave1C
+    {
+        public static void Run()
+        {
+            NameFormatter formatter = new NameFormatter();
+            formatter.Run();
+        }
+    }
+}
+
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave1
+{
+    public class Oppgave1D
+    {
+        public static void Run()
+        {
+            ArraySum arraySum = new ArraySum();
+            arraySum.CalculateSum();
+        }
+    }
+}
+
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave1
+{
+    public class Oppgave1E
+    {
+        public static void Run()
+        {
+            AverageCalculator calculator = new AverageCalculator();
+            calculator.Run();
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave2
+{
+    public class Oppgave2A
+    {
+        public static void Run()
+        {
+            Athlete athlete = new Athlete("Ola Nordmann", "Fotball", 20, 5, "12345678901");
+            athlete.Print();
+        }
+    }
+}
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave2
+{
+    public class Oppgave2B
+    {
+        public static void Run()
+        {
+            // Oppretter en Athlete-objekt
+            Athlete athlete = new Athlete("Kari Nordmann", "Håndball", 22, 3, "10987654321");
+            
+            // Skriver ut informasjon om atleten
+            athlete.Print();
+            
+            // Øker medaljeantallet med 2
+            athlete.AddMedalCount(2);
+            
+            // Skriver ut oppdatert medaljeantall
+            Console.WriteLine($"Oppdatert medaljeantall: {athlete.MedalCount}");
+            
+            // Sjekker om atleten er myndig
+            Console.WriteLine($"Er myndig: {athlete.IsOfLegalAge()}");
+        }
+    }
+}
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave2
+{
+    public class Oppgave2C
+    {
+        public static void Run()
+        {
+            Coach coach = new Coach("Per Hansen", "Svømming", 10, "Elite Team");
+            coach.Print();
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave2
+{
+    public class Oppgave2D
+    {
+        public static void Run()
+        {
+            Coach coach = new Coach("Lise Olsen", "Basketball", 8, "Tigers");
+            Athlete athlete1 = new Athlete("Jonas Berg", "Basketball", 19, 1, "22334455667");
+            Athlete athlete2 = new Athlete("Mia Lund", "Basketball", 17, 0, "99887766554");
+
+            coach.AssignAthleteToCoach(athlete1);
+            coach.AssignAthleteToCoach(athlete2);
+            coach.ListAllAthletes();
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave2
+{
+    public class Oppgave2E
+    {
+        public static void Run()
+        {
+            Athlete athlete1 = new Athlete("Mats Eriksen", "Tennis", 21, 4, "55443322110");
+            Athlete athlete2 = new Athlete("Anna Solberg", "Tennis", 16, 2, "66778899001");
+
+            Console.WriteLine($"{athlete1.Name} er myndig: {athlete1.IsOfLegalAge()}");
+            Console.WriteLine($"{athlete2.Name} er myndig: {athlete2.IsOfLegalAge()}");
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave3
+{
+    public class Oppgave3A
+    {
+        public static void Run()
+        {
+            // Oppretter en bil med modellnavn og drivstoffnivå
+            Car car = new Car("Toyota Corolla", 20, 500);
+
+            car.PrintDetails();
+            car.Run(); // Kjører bilen og reduserer drivstoffnivået
+            car.Refuel(30); // Fyller drivstoff
+            car.Run(); // Kjører igjen etter fylling
+        }
+    }
+}
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave3
+{
+    public class Oppgave3B
+    {
+        public static void Run()
+        {
+            // Oppretter en bil og demonstrerer funksjonaliteten
+            Car car = new Car("BMW X5", 50, 500);
+            car.PrintDetails();
+            car.Run();
+            car.LoadCargo(300); // Legger til last i bagasjerommet
+
+            Console.WriteLine();
+
+            // Oppretter en båt og demonstrerer funksjonaliteten
+            Boat boat = new Boat("Yamaha Speedboat", 40, 25.5);
+            boat.PrintDetails();
+            boat.Run();
+            boat.Anchor(); // Ankrer båten
+
+            Console.WriteLine();
+
+            // Oppretter et fly og demonstrerer funksjonaliteten
+            Airplane airplane = new Airplane("Boeing 747", 80, 60.0);
+            airplane.PrintDetails();
+            airplane.Run();
+            airplane.TakeOff(); // Flyet tar av
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave3
+{
+    public class Oppgave3C
+    {
+        public static void Run()
+        {
+            // Oppretter en liste med TransportVehicle-objekter (polymorfisme)
+            List<TransportVehicle> vehicles = new List<TransportVehicle>
+            {
+                new Car("Tesla Model S", 50, 500),
+                new Boat("Yamaha Speedboat", 40, 25.5),
+                new Airplane("Boeing 747", 80, 60.0)
+            };
+
+            // Itererer gjennom listen og kaller Run() på hvert objekt (demonstrasjon av polymorfisme)
+            foreach (var vehicle in vehicles)
+            {
+                vehicle.PrintDetails();
+                vehicle.Run();
+                Console.WriteLine();
+                
+                // Kaller unike metoder for hver subklasse ved hjelp av typekontroll
+                if (vehicle is Car car)
+                    car.LoadCargo(300);
+                else if (vehicle is Boat boat)
+                    boat.Anchor();
+                else if (vehicle is Airplane airplane)
+                    airplane.TakeOff();
+                
+                Console.WriteLine();
+            }
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave3
+{
+    public class Oppgave3D
+    {
+        public static void DisplayAllVehicles(List<TransportVehicle> vehicles)
+        {
+            foreach (var vehicle in vehicles)
+            {
+                vehicle.PrintDetails();
+
+                if (vehicle is Car car)
+                    Console.WriteLine($"Bagasjeromkapasitet: {car.TrunkCapacity} liter");
+                else if (vehicle is Boat boat)
+                    Console.WriteLine($"Dekkområde: {boat.DeckArea} kvadratmeter");
+                else if (vehicle is Airplane airplane)
+                    Console.WriteLine($"Vingespenn: {airplane.WingSpan} meter");
+
+                Console.WriteLine();
+            }
+        }
+
+        public static void Run()
+        {
+            List<TransportVehicle> vehicles = new List<TransportVehicle>
+            {
+                new Car("Tesla Model S", 50, 500),
+                new Boat("Yamaha Speedboat", 40, 25.5),
+                new Airplane("Boeing 747", 80, 60.0)
+            };
+
+            DisplayAllVehicles(vehicles);
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave3
+{
+    public class Oppgave3E
+    {
+        public static void Run()
+        {
+            Car car = new Car("Tesla Model S", 0, 500); // Oppretter en bil med drivstoffnivå på 0
+
+            try
+            {
+                car.PrintDetails();
+                car.Run(); // Forsøker å kjøre bilen med drivstoffnivå på 0 (vil kaste unntak)
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"Unntak fanget: {ex.Message}");
+                Console.WriteLine("Forsøker å fylle drivstoff...");
+                car.Refuel(50); // Fyller drivstoff for å håndtere unntaket
+
+                Console.WriteLine("Prøver å kjøre igjen...");
+                car.Run(); // Forsøker å kjøre bilen på nytt etter å ha fylt drivstoff
+            }
+        }
+    }
+}
+using System;
+using Eksamen_2025.Interfaces;
+
+namespace Eksamen_2025.Oppgaver.Oppgave4
+{
+    public class Oppgave4A
+    {
+        public static void Run()
+        {
+            Console.WriteLine("Interface IStorable er definert med metodene:");
+            Console.WriteLine("- ToCSV()");
+            Console.WriteLine("- ToJSON()");
+            Console.WriteLine("- ToXML()");
+            Console.WriteLine("Dette interfacet kan implementeres av klasser som trenger lagring i ulike formater.");
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave4
+{
+    public class Oppgave4B
+    {
+        public static void Run()
+        {
+            // Oppretter et produkt og demonstrerer implementasjonen av IStorable-metodene
+            Product product = new Product("P001", "Laptop", "Electronics", 999.99, 10);
+
+            Console.WriteLine("Produktet som CSV:");
+            Console.WriteLine(product.ToCSV());
+            
+            Console.WriteLine("\nProduktet som JSON:");
+            Console.WriteLine(product.ToJSON());
+            
+            Console.WriteLine("\nProduktet som XML:");
+            Console.WriteLine(product.ToXML());
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Eksamen_2025.Interfaces;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave4
+{
+    public class Oppgave4C
+    {
+        // Funksjon for å eksportere en liste med IStorable-objekter til en CSV-fil
+        public static bool ExportToFile(List<IStorable> items, string fileName)
+        {
+            try
+            {
+                // Åpner filen for skriving med UTF-8-koding
+                using (StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8))
+                {
+                    foreach (var item in items)
+                    {
+                        // Skriver hver linje i CSV-format ved å bruke ToCSV-metoden
+                        writer.WriteLine(item.ToCSV());
+                    }
+                }
+
+                Console.WriteLine($"Dataene ble eksportert til filen: {fileName}");
+                return true; // Operasjonen var vellykket
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"En feil oppstod under eksport: {ex.Message}");
+                return false; // Operasjonen mislyktes
+            }
+        }
+
+        public static void Run()
+        {
+            // Oppretter en liste med produkter
+            List<IStorable> products = new List<IStorable>
+            {
+                new Product("P001", "Laptop", "Electronics", 999.99, 10),
+                new Product("P002", "Smartphone", "Electronics", 799.99, 20),
+                new Product("P003", "Tablet", "Electronics", 499.99, 15)
+            };
+
+            // Filnavn for eksport
+            string fileName = "products.csv";
+
+            // Kaller ExportToFile-funksjonen og sjekker om operasjonen var vellykket
+            bool success = ExportToFile(products, fileName);
+
+            if (success)
+            {
+                Console.WriteLine("Eksporten var vellykket!");
+            }
+            else
+            {
+                Console.WriteLine("Eksporten mislyktes.");
+            }
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using Eksamen_2025.Interfaces;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave4
+{
+    public class Oppgave4D
+    {
+        public static void Run()
+        {
+            // Oppretter en liste med 10 Product-objekter med ulike attributter
+            List<IStorable> products = new List<IStorable>
+            {
+                new Product("P001", "Laptop", "Electronics", 999.99, 10),
+                new Product("P002", "Smartphone", "Electronics", 799.99, 20),
+                new Product("P003", "Tablet", "Electronics", 499.99, 15),
+                new Product("P004", "Headphones", "Accessories", 199.99, 50),
+                new Product("P005", "Keyboard", "Accessories", 49.99, 100),
+                new Product("P006", "Mouse", "Accessories", 29.99, 200),
+                new Product("P007", "Monitor", "Electronics", 299.99, 30),
+                new Product("P008", "Printer", "Office Supplies", 149.99, 25),
+                new Product("P009", "Desk Chair", "Furniture", 89.99, 40),
+                new Product("P010", "Desk Lamp", "Lighting", 39.99, 60)
+            };
+
+            // Filnavn for eksport
+            string fileName = "products.csv";
+
+            // Kaller ExportToFile-funksjonen for å eksportere produktene til CSV-filen
+            bool success = Oppgave4C.ExportToFile(products, fileName);
+
+            // Bekreftelse på eksportstatus
+            if (success)
+            {
+                Console.WriteLine($"Eksporten av produkter til '{fileName}' var vellykket!");
+            }
+            else
+            {
+                Console.WriteLine($"Eksporten av produkter til '{fileName}' mislyktes.");
+            }
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave4
+{
+    public class Oppgave4E
+    {
+        public static List<Product> LoadFromFile(string fileName)
+        {
+            List<Product> products = new List<Product>();
+
+            try
+            {
+                // Leser inn data fra filen linje for linje
+                using (StreamReader reader = new StreamReader(fileName))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        // Splitter CSV-linjen i deler og oppretter et Product-objekt
+                        string[] parts = line.Split(',');
+
+                        if (parts.Length == 5) // Forventer 5 deler: ProductID, Name, Category, Price, Quantity
+                        {
+                            string productID = parts[0];
+                            string name = parts[1];
+                            string category = parts[2];
+                            double price = double.Parse(parts[3]);
+                            int quantity = int.Parse(parts[4]);
+
+                            Product product = new Product(productID, name, category, price, quantity);
+                            products.Add(product);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Ugyldig linjeformat: {line}");
+                        }
+                    }
+                }
+
+                Console.WriteLine($"Data ble lastet inn fra filen: {fileName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"En feil oppstod under lesing fra filen: {ex.Message}");
+            }
+
+            return products; // Returnerer listen med produkter (kan være tom hvis det oppstod feil)
+        }
+
+        public static void Run()
+        {
+            string fileName = "products.csv";
+
+            // Kaller LoadFromFile-metoden for å lese data fra filen
+            List<Product> products = LoadFromFile(fileName);
+
+            if (products.Count > 0)
+            {
+                Console.WriteLine("Produkter lastet inn fra fil:");
+                foreach (var product in products)
+                {
+                    Console.WriteLine(product.ToCSV()); // Skriver ut produktdata som CSV-linjer
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ingen produkter ble lastet inn.");
+            }
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Interfaces;
+
+namespace Eksamen_2025.Oppgaver.Oppgave5
+{
+    public class Oppgave5A
+    {
+        public static void Run()
+        {
+            Console.WriteLine("Grensesnittet IGame er definert med følgende metoder:");
+            Console.WriteLine("- Start(): Starter spillet.");
+            Console.WriteLine("- PlayRound(): Utfører én spillrunde.");
+            Console.WriteLine("- EndGame(): Avslutter spillet og viser resultatet.");
+            Console.WriteLine("Dette grensesnittet kan implementeres av alle spillklasser.");
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave5
+{
+    public class Oppgave5B
+    {
+        public static void Run()
+        {
+            Console.WriteLine("Den abstrakte klassen Game er definert med følgende egenskaper:");
+            Console.WriteLine("- GameName (string): Navnet på spillet.");
+            Console.WriteLine("- MaxRounds (int): Maks antall runder.");
+            Console.WriteLine("- CurrentRound (int): Gjeldende runde.");
+            Console.WriteLine("- IsGameOver (bool): Om spillet er avsluttet.");
+            Console.WriteLine("Klassen implementerer grensesnittet IGame og definerer abstrakte metoder:");
+            Console.WriteLine("- Start(): Starter spillet.");
+            Console.WriteLine("- PlayRound(): Utfører én spillrunde.");
+            Console.WriteLine("- EndGame(): Viser sluttresultatet.");
+            Console.WriteLine("Subklasser må implementere de abstrakte metodene.");
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave5
+{
+    public class Oppgave5C
+    {
+        public static void Run()
+        {
+            // Oppretter et gjettespill med maks 5 runder og tall mellom 1 og 100
+            GuessingGame game = new GuessingGame("Gjettespill", 5, 100);
+
+            game.Start(); // Starter spillet
+
+            while (!game.IsGameOver)
+            {
+                game.PlayRound(); // Utfører en spillrunde
+            }
+
+            game.EndGame(); // Avslutter spillet og viser resultatet
+        }
+    }
+}
+
+using System;
+using Eksamen_2025.Klasser;
+
+namespace Eksamen_2025.Oppgaver.Oppgave5
+{
+    public class Oppgave5D
+    {
+        public static void Run()
+        {
+            Console.WriteLine("Velkommen til Gjettespill!");
+            
+            // Velg vanskelighetsgrad
+            Console.WriteLine("Velg vanskelighetsgrad:");
+            Console.WriteLine("1. Lett (Tall mellom 1-10, maks 5 forsøk)");
+            Console.WriteLine("2. Medium (Tall mellom 1-50, maks 8 forsøk)");
+            Console.WriteLine("3. Vanskelig (Tall mellom 1-100, maks 10 forsøk)");
+
+            int difficulty = int.Parse(Console.ReadLine());
+            
+            int range;
+            int maxRounds;
+
+            switch (difficulty)
+            {
+                case 1:
+                    range = 10;
+                    maxRounds = 5;
+                    break;
+                case 2:
+                    range = 50;
+                    maxRounds = 8;
+                    break;
+                case 3:
+                    range = 100;
+                    maxRounds = 10;
+                    break;
+                default:
+                    Console.WriteLine("Ugyldig valg. Standardinnstilling: Vanskelig.");
+                    range = 100;
+                    maxRounds = 10;
+                    break;
+            }
+
+            // Oppretter spillet basert på valgt vanskelighetsgrad
+            GuessingGame game = new GuessingGame("Gjettespill", maxRounds, range);
+
+            game.Start(); // Starter spillet
+
+            while (!game.IsGameOver)
+            {
+                game.PlayRound(); // Utfører en spillrunde
+            }
+
+            game.EndGame(); // Avslutter spillet og viser resultatet
+
+            // Viser tidligere resultater fra filen
+            GuessingGame.LoadHighScores();
+        }
+    }
+}
+
